@@ -1,25 +1,3 @@
-# import requests
-# from bs4 import BeautifulSoup
-# import csv
-# from urllib.parse import unquote
-
-
-# alph = 'АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯ'
-
-# for letter in alph:
-#     url = f"https://ru.wikipedia.org/w/index.php?title=Категория:Животные_по_алфавиту&from={letter}"
-
-#     response = requests.get(url)
-#     page_content = response.text
-
-#     soup = BeautifulSoup(page_content, "lxml")
-
-#     links = soup.find_all('a')
-
-#     for link in links:
-#         with open('name_animals.txt', 'a', encoding='utf8') as file:
-#             if link.text and link.text[0] == letter and len(link.text) > 2:
-#                 file.write(link.text + '\n')
 import requests
 from bs4 import BeautifulSoup
 import csv
@@ -37,10 +15,10 @@ for letter in alph:
     page_content = response.content
 
     soup = BeautifulSoup(page_content, "lxml")
-    # Получаем все ссылки
+    # Получаем div со всеми ссылками
     main_div = soup.find('div', attrs={'class':'mw-category-columns'})
+    # Находим эти ссылки
     links = main_div.find_all('a')
-    # Получаем нужные ссылки
     for link in links:
         animal_counts[letter] += 1
 
