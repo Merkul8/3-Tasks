@@ -34,15 +34,15 @@ for letter in alph:
     url = f"https://ru.wikipedia.org/w/index.php?title=Категория:Животные_по_алфавиту&from={letter}"
 
     response = requests.get(url)
-    page_content = response.text
+    page_content = response.content
 
     soup = BeautifulSoup(page_content, "lxml")
     # Получаем все ссылки
-    links = soup.find_all('a')
+    main_div = soup.find('div', attrs={'class':'mw-category-columns'})
+    links = main_div.find_all('a')
     # Получаем нужные ссылки
     for link in links:
-        if link.text and link.text[0] == letter and len(link.text) > 2:
-            animal_counts[letter] += 1
+        animal_counts[letter] += 1
 
 # Записываем результат в CSV-файл
 with open('beasts.csv', mode='w', encoding='cp1251', newline='') as file:
